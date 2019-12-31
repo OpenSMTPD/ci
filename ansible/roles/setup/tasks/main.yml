@@ -2,6 +2,7 @@
 
 - debug: var=ansible_facts['os_family']
 
+
 - name: gather os specific variables
   include_vars: "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
 
