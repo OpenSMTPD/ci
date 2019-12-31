@@ -1,0 +1,58 @@
+---
+
+# https://docs.ansible.com/ansible/latest/modules/file_module.html
+- name: create empty dir
+  file:
+    path: "{{ directory.empty }}"
+    state: directory
+    mode: '0755'
+
+
+- name: create spool dir
+  file:
+    path: "{{ directory.spool }}"
+    state: directory
+    mode: '0711'
+
+
+- name: create var dir
+  file:
+    path: "{{ directory.var }}"
+    state: directory
+    mode: '0755'
+
+
+- name: create etc dir
+  file:
+    path: "{{ directory.etc }}"
+    state: directory
+    mode: '0755'
+
+
+# https://docs.ansible.com/ansible/latest/modules/user_module.html
+- name: create daemon user
+  user:
+    name: "{{ user.daemon }}"
+    shell: /bin/false
+    home: "{{ directory.empty }}"
+    create_home: no
+
+
+- name: create queue user
+  user:
+    name: "{{ user.queue }}"
+    shell: /bin/false
+    home: "{{ directory.empty }}"
+    create_home: no
+
+
+- name: create alice user
+  user:
+    name: alice
+    create_home: yes
+
+
+- name: create bob user
+  user:
+    name: bob
+    create_home: yes

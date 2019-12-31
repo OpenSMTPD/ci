@@ -1,0 +1,17 @@
+---
+
+- name: Testing Playbook
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+
+  vars_files:
+    - global_vars.yml
+  
+  roles:
+    - role: setup
+      tags: [ setup ]
+    - simple_test
+
+
+

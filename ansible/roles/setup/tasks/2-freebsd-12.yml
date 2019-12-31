@@ -1,0 +1,14 @@
+---
+
+# https://docs.ansible.com/ansible/latest/modules/copy_module.html
+- name: install rc script
+  copy:
+    src: freebsd-12/smtpd
+    dest: /etc/rc.d/smtpd
+    owner: root
+    group: wheel
+    mode: '0555'
+  become: yes
+  become_method: "{{ become_method }}"
+
+

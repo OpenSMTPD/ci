@@ -1,0 +1,10 @@
+---
+
+git_ref: portable
+
+user:
+  daemon: _smtpd
+  queue: _smtpq
+
+
+

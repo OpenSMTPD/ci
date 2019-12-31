@@ -1,0 +1,17 @@
+---
+
+packages:
+  - autoconf
+  - automake
+  - bison
+  - libevent
+  - libtool
+  - libressl-devel
+  - libasr
+  - db6
+
+configure_params: 
+  - "--prefix=/"
+  - "--with-libasr=/usr/local"
+  - "--sysconfdir=/etc/mail/"
+

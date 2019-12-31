@@ -1,0 +1,21 @@
+---
+
+- name: make install
+  shell: make install
+  args:
+    chdir: "{{ build_dir.path }}/opensmtpd"
+  become: yes
+  become_method: "{{ become_method }}"
+
+
+- name: OS specific rc/init script installation
+  include: "2-{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+
+
+# https://docs.ansible.com/ansible/latest/modules/service_module.html
+- name: Start service httpd, if not started
+  service:
+    name: smtpd
+    state: started
+  become: yes
+  become_method: "{{ become_method }}"

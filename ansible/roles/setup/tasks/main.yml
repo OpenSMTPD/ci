@@ -1,0 +1,21 @@
+---
+
+- debug: var=ansible_facts['os_family']
+
+- name: gather os specific variables
+  include_vars: "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+
+
+- name: prepare
+  include: 0-prepare.yml
+  become: yes
+  become_method: "{{ become_method }}"
+
+
+- name: build
+  include: 1-build.yml
+
+
+- name: install
+  include: 2-install.yml
+

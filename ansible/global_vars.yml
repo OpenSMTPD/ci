@@ -1,0 +1,13 @@
+---
+
+
+directory:
+  empty: /var/lib/opensmtpd/empty
+  spool: /var/spool/smtpd
+  var: /var/mail
+  etc: /etc/mail
+
+
+# sourcehut build workers have paswordless sudo
+# %sudo ALL=(ALL) NOPASSWD: ALL 
+become_method: sudo

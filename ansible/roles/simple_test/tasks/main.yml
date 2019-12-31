@@ -1,0 +1,59 @@
+---
+
+# https://docs.ansible.com/ansible/latest/modules/service_module.html
+- name: Ensure smtpd is running
+  service:
+    name: smtpd
+    state: started
+  become: yes
+  become_method: "{{ become_method }}"
+
+
+- name: Check alice mail before
+  stat: 
+    path: "{{ directory.var }}/alice"
+  register: before
+
+
+# https://docs.ansible.com/ansible/latest/modules/mail_module.html
+- name: Send an email
+  mail:
+    host: localhost
+    port: 25
+    to: alice
+    subject: Simple Test
+    body: Hope this works!
+
+
+- name: Check alice mail after
+  stat: 
+    path: "{{ directory.var }}/alice"
+  register: after
+
+  # ensure service is running
+# https://docs.ansible.com/ansible/latest/modules/service_module.html
+- name: Check that service is still running
+  service:
+    name: smtpd
+    state: started
+  become: yes
+  become_method: "{{ become_method }}"
+  register: service_state
+
+# - debug: var=service_state
+# - debug: var=before
+# - debug: var=after
+
+# https://docs.ansible.com/ansible/latest/modules/fail_module.html
+- name: Fail if service was not in running after sending an email
+  fail:
+    msg: Service has probably crushed
+  when: service_state.changed != false
+
+
+# https://docs.ansible.com/ansible/latest/modules/fail_module.html
+- name: Fail if mail was not delivered
+  fail:
+    msg: Mail was not delivered
+  when: before.stat.size >= after.stat.size
+

@@ -1,0 +1,51 @@
+---
+
+# https://docs.ansible.com/ansible/latest/modules/package_module.html
+- name: install dependecies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages }}"
+  become: yes
+  become_method: "{{ become_method }}"
+
+
+- debug: var=git_ref
+
+
+# https://docs.ansible.com/ansible/latest/modules/tempfile_module.html
+- name: create temporary build directory
+  tempfile:
+    state: directory
+    suffix: build 
+  register: build_dir
+
+
+- debug: var=build_dir
+
+
+# https://docs.ansible.com/ansible/latest/modules/git_module.html
+- name: checkout git repository
+  git:
+    repo: 'https://github.com/OpenSMTPD/OpenSMTPD.git'
+    dest: "{{ build_dir.path }}/opensmtpd"
+    version: "{{ git_ref }}"
+
+
+# https://docs.ansible.com/ansible/latest/modules/shell_module.html
+- name: bootstrap
+  shell: ./bootstrap
+  args:
+    chdir: "{{ build_dir.path }}/opensmtpd"
+
+
+- name: configure
+  shell: "./configure {{ configure_params | join (' ') }}"
+  args:
+    chdir: "{{ build_dir.path }}/opensmtpd"
+
+
+- name: make
+  shell: make
+  args:
+    chdir: "{{ build_dir.path }}/opensmtpd"
