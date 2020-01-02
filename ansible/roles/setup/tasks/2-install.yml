@@ -1,9 +1,10 @@
 ---
 
+# https://docs.ansible.com/ansible/latest/modules/shell_module.html
 - name: make install
   shell: make install
   args:
-    chdir: "{{ build_dir.path }}/opensmtpd"
+    chdir: "{{ build_dir }}"
   become: yes
   become_method: "{{ become_method }}"
 

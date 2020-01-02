@@ -8,6 +8,7 @@
     mode: '0755'
 
 
+# https://docs.ansible.com/ansible/latest/modules/file_module.html
 - name: create spool dir
   file:
     path: "{{ directory.spool }}"
@@ -15,6 +16,7 @@
     mode: '0711'
 
 
+# https://docs.ansible.com/ansible/latest/modules/file_module.html
 - name: create var dir
   file:
     path: "{{ directory.var }}"
@@ -22,6 +24,7 @@
     mode: '0755'
 
 
+# https://docs.ansible.com/ansible/latest/modules/file_module.html
 - name: create etc dir
   file:
     path: "{{ directory.etc }}"
@@ -38,6 +41,7 @@
     create_home: no
 
 
+# https://docs.ansible.com/ansible/latest/modules/user_module.html
 - name: create queue user
   user:
     name: "{{ user.queue }}"
@@ -46,12 +50,14 @@
     create_home: no
 
 
+# https://docs.ansible.com/ansible/latest/modules/user_module.html
 - name: create alice user
   user:
     name: alice
     create_home: yes
 
 
+# https://docs.ansible.com/ansible/latest/modules/user_module.html
 - name: create bob user
   user:
     name: bob
