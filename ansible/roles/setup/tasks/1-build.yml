@@ -11,6 +11,7 @@
 
 
 - debug: var=git_ref
+  tags: checkout
 
 
 # https://docs.ansible.com/ansible/latest/modules/tempfile_module.html
@@ -19,6 +20,7 @@
     state: directory
     suffix: build 
   register: build_dir
+  tags: checkout
 
 
 - debug: var=build_dir
@@ -30,6 +32,7 @@
     repo: 'https://github.com/OpenSMTPD/OpenSMTPD.git'
     dest: "{{ build_dir.path }}/opensmtpd"
     version: "{{ git_ref }}"
+  tags: checkout
 
 
 # https://docs.ansible.com/ansible/latest/modules/shell_module.html
