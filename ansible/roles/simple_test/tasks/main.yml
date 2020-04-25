@@ -11,7 +11,7 @@
 
 - name: Check alice mail before
   stat: 
-    path: "{{ directory.var }}/alice"
+    path: "/home/alice/Maildir/new"
   register: before
 
 
@@ -27,7 +27,7 @@
 
 - name: Check alice mail after
   stat: 
-    path: "{{ directory.var }}/alice"
+    path: "/home/alice/Maildir/new"
   register: after
 
   # ensure service is running
