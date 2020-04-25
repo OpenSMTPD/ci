@@ -9,11 +9,6 @@
   become_method: "{{ become_method }}"
 
 
-- name: Check alice mail before
-  stat: 
-    path: "/home/alice/Maildir/new"
-  register: before
-
 
 # https://docs.ansible.com/ansible/latest/modules/mail_module.html
 - name: Send an email
@@ -25,10 +20,12 @@
     body: Hope this works!
 
 
-- name: Check alice mail after
+- name: Check alice's maildir after sending email
   stat: 
     path: "/home/alice/Maildir/new"
-  register: after
+  register: maildir_new
+  become: yes
+  become_method: "{{ become_method }}"
 
   # ensure service is running
 # https://docs.ansible.com/ansible/latest/modules/service_module.html
@@ -55,5 +52,5 @@
 - name: Fail if mail was not delivered
   fail:
     msg: Mail was not delivered
-  when: before.stat.size >= after.stat.size
+  when: maildir_new.stat.isdir is not defined or not maildir_new.stat.isdir
 
