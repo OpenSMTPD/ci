@@ -8,7 +8,7 @@ packages:
   - libtool
   - libressl-devel
   - libasr
-  - db6
+  - db5
 
 configure_params: 
   - "--prefix=/"
